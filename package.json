@@ -1,16 +1,16 @@
 {
-  "name": "instagram",
+  "name": "instagram-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Instagram register ma'lumotlarini Telegram botga yuboruvchi loyiha",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0",
-    "fs": "^0.0.1-security"
-  }
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "author": "Sizning Ismingiz",
+  "license": "MIT"
 }
